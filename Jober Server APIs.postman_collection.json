@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "fa53bd07-8fef-48bf-bcdd-60d6de3f67d1",
+		"name": "Jober Server APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "Account",
+					"item": [
+						{
+							"name": "가입(Join)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "email",
+											"description": "(uid, username, email, google, apple, fb, kakao, naver, line) 중 1가지.",
+											"type": "text"
+										},
+										{
+											"key": "id",
+											"value": "test1@jober.io",
+											"description": "type에 맞는 unique ID.",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"description": "비밀번호.",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "가나다",
+											"description": "이름.",
+											"type": "text"
+										},
+										{
+											"key": "companyName",
+											"value": "자버",
+											"description": "회사명.",
+											"type": "text"
+										},
+										{
+											"key": "socialIdToken",
+											"value": "",
+											"description": "google type만 필요함.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "socialAccessToken",
+											"value": "",
+											"description": "Social type만 필요함.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/v1/account",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"account"
+									]
+								},
+								"description": "Response:\n    code: 성공(0), 실패(error code)\nCookie:\n    access_token: JWT"
+							},
+							"response": []
+						},
+						{
+							"name": "로그인(Login)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "email",
+											"description": "(uid, username, email, google, apple, fb, kakao, naver, line) 중 1가지.",
+											"type": "text"
+										},
+										{
+											"key": "id",
+											"value": "test1@jober.io",
+											"description": "type에 맞는 unique ID.",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"description": "비밀번호.",
+											"type": "text"
+										},
+										{
+											"key": "socialIdToken",
+											"value": "",
+											"description": "google type만 필요함.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "socialAccessToken",
+											"value": "",
+											"description": "Social type만 필요함.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/v1/account",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"account"
+									]
+								},
+								"description": "Response:\n    code: 성공(0), 실패(error code)\nCookie:\n    access_token: JWT"
+							},
+							"response": []
+						},
+						{
+							"name": "탈퇴(Withdraw)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3000/v1/account",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"account"
+									]
+								},
+								"description": "Response:\n    code: 성공(0), 실패(error code)"
+							},
+							"response": []
+						},
+						{
+							"name": "계정연동(Link account to current user)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJvd25lciI6IjVmNjMxYzNiNzJiY2E3MTJkYTE2YjcwZiIsIm5hbWUiOiLqsIDrgpjri6QiLCJuaWNrbmFtZSI6IuudvOuniCIsImlhdCI6MTYwMDMzMTIzMX0.AgBWW7UZjGTK2tYx8JXXdXGY61zRNKN8r53m3TD6rcTcBaWlwHNz0svMnni6MlAce-1D1MNXAjrWN3rrowmrk2O-4asNwXYYBZT7gptdG2EPiokK9zJuei8zLoQ9XJbO4rXSlW8BA9HbfEFO10ErjXi7L4rvFH7Qe6pA92x3Ofe1gBaPYcPse7E1dT5AG2wXC7NkQoN8yJf0-UK5j3bfquz3HkwoF97Jan81PSa9Xdr6iLv0z3HmscDId8TeUKtCLYhcvm7IQVeQmMcmYcpPJLoPZoKc4IDy3aowvh8kFv9xOt7GlR19FykODoqpnnucQnEGApYKehrTqorVhiSNk6zXsF9n8sCpw3Z_GLgidHKCWyvVS8zND-DHKmfLttkj9hydzofmwr-6fF4QmSjYayJ5rpXlyCKrsbgqLK7oH0TATW0MUw9kjHh9V1HWe8VGuy_d61qqpI2inczgPgbLhsjgtxMkw7MeXGb2HZnZDlZFPhFO08LdyRmlooxIdI1zQQjhc1VL5bQ11rmYnvImnjUeNXHDOrDpy_LwDu2VHmLF1iR3tK4W0C6KhsdlvDjkW_CLMFGbYm4hHhn_M4HbX1IZnxVHL27nEuZ6hCxs5LtUQKgMhEvcuuB6WYdEVQ27EwzP6vHHpWt60iViFzUx4UV_hDYu7NQheY8gOkE2cNM",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "type",
+											"value": "email",
+											"description": "(uid, username, email, google, apple, fb, kakao, naver, line) 중 1가지.",
+											"type": "text"
+										},
+										{
+											"key": "id",
+											"value": "test2@jober.io",
+											"description": "type에 맞는 unique ID.",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"description": "비밀번호.",
+											"type": "text"
+										},
+										{
+											"key": "socialIdToken",
+											"value": "",
+											"description": "google type만 필요함.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "socialAccessToken",
+											"value": "",
+											"description": "Social type만 필요함.",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/v1/account/link",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"account",
+										"link"
+									]
+								},
+								"description": "Response:\n    code: 성공(0), 실패(error code)"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Token",
+					"item": [
+						{
+							"name": "토큰 갱신(refresh)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3000/v1/token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"token"
+									]
+								},
+								"description": "Response:\n    code: 성공(0), 실패(error code)\nCookie:\n    access_token: JWT"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "유저 상세정보 조회",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:3000/v1/user/detail",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"user",
+										"detail"
+									]
+								},
+								"description": "Response:\n    code: 성공(0), 실패(error code)\n    result: Object\n        user: Object\n            name: String\n            nickname: String"
+							},
+							"response": []
+						},
+						{
+							"name": "유저 정보 변경",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "password",
+											"value": "2345",
+											"description": "변경할 password.",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/v1/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"user"
+									]
+								},
+								"description": "Response:\n    code: 성공(0), 실패(error code)"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
