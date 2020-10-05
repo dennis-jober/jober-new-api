@@ -51,7 +51,7 @@ exports.create = async (req, res) => {
   const { lang, body } = req;
   const {
     type, id, password, socialIdToken, socialAccessToken,
-    companyName,
+    companyName, identity,
   } = body;
   let { name } = body;
   const result = {};
@@ -74,7 +74,7 @@ exports.create = async (req, res) => {
   await transaction(async (t) => {
     await Promise.all([
       AccountService.createObject({
-        type, id, password, owner,
+        type, id, password, owner, identity,
       }, t),
       UserService.createObject({ owner }, t),
     ]);

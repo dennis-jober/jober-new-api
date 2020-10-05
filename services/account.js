@@ -114,11 +114,11 @@ exports.getAllObjectsByOwner = async (owner) => {
 
 exports.createObject = async (params, transaction) => {
   const {
-    type, id, password, owner,
+    type, id, password, owner, identity,
   } = params;
 
   const account = {
-    type, id, owner,
+    type, id, owner, identity,
   };
   // 이메일 인증없이 가입가능하도록 수정됨.
   // if (type === AccountType.EMAIL) account.auth = false;

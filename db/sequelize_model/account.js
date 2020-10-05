@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => sequelize.define(
       type: DataTypes.STRING(32),
       allowNull: false,
     },
+    identity: {
+      type: DataTypes.STRING(128),
+    },
   },
   {
     tableName: 'account',
