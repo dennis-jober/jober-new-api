@@ -10,7 +10,7 @@ async function batchGet(TableName, Keys) {
     },
   }).promise();
 
-  return data.Response ? data.Response[TableName] || [] : [];
+  return data.Responses ? data.Responses[TableName] || [] : [];
 }
 
 async function batchWrite(TableName, Items) {
@@ -43,7 +43,7 @@ module.exports = TableName => ({
         [Key] = Key;
         if (Array.isArray(Key)) {
           if (!Key.length) throw new errors.InternalError('invalid parameter');
-          return await batchGet(TableName, Key);
+          return batchGet(TableName, Key);
         }
 
         params = {
