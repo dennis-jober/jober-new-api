@@ -14,6 +14,7 @@ exports.createObject = async (params) => {
     owner,
     employeeType,
     rolesId,
+    deletedAt: ' ',
   };
 
   await EmployeeDDB.put(employee);
@@ -21,15 +22,32 @@ exports.createObject = async (params) => {
   return employee;
 };
 
-exports.getAllObjectsByOwner = async (owner, left = 0) => {
-  let itemList = await EmployeeDDB.queryAll(
-    '#o = :o',
-    { '#o': 'owner' },
-    { ':o': owner },
+exports.getObjectByOwner = async (companyId, owner) => {
+  const items = await EmployeeDDB.queryAll(
+    '#cid = :cid and #o = :o',
+    { '#cid': 'companyId', '#o': 'owner', '#d': 'deletedAt' },
+    { ':cid': companyId, ':o': owner },
+    {
+      IndexName: 'companyId-owner-index',
+      FilterExpression: 'attribute_not_exists(#d)',
+    },
   );
-  if (left) {
-    itemList = itemList.filter(i => !i.leftAt);
+
+  if (items.length) return items[0];
+};
+
+exports.getAllObjectListByOwner = (owner, left = 0) => {
+  const EAN = { '#o': 'owner' };
+  const params = { IndexName: 'owner-id-index' };
+  if (!left) {
+    params.FilterExpression = 'attribute_not_exists(#d)';
+    EAN['#d'] = 'deletedAt';
   }
 
-  return itemList;
+  return EmployeeDDB.queryAll(
+    '#o = :o',
+    EAN,
+    { ':o': owner },
+    params,
+  );
 };

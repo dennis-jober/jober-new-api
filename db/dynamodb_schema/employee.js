@@ -13,8 +13,6 @@ const params = {
     { AttributeName: 'companyId', AttributeType: 'S' },
     { AttributeName: 'id', AttributeType: 'S' },
     { AttributeName: 'owner', AttributeType: 'S' },
-    { AttributeName: 'leftAt', AttributeType: 'S' },
-    { AttributeName: 'type_leftAt', AttributeType: 'S' },
   ],
   ProvisionedThroughput: {
     ReadCapacityUnits: 1,
@@ -22,10 +20,10 @@ const params = {
   },
   LocalSecondaryIndexes: [
     {
-      IndexName: 'companyId-type_leftAt-index',
+      IndexName: 'companyId-owner-index',
       KeySchema: [
         { AttributeName: 'companyId', KeyType: 'HASH' },
-        { AttributeName: 'type_leftAt', KeyType: 'RANGE' },
+        { AttributeName: 'owner', KeyType: 'RANGE' },
       ],
       Projection: {
         ProjectionType: 'ALL',
@@ -34,10 +32,10 @@ const params = {
   ],
   GlobalSecondaryIndexes: [
     {
-      IndexName: 'owner-leftAt-index',
+      IndexName: 'owner-id-index',
       KeySchema: [
         { AttributeName: 'owner', KeyType: 'HASH' },
-        { AttributeName: 'leftAt', KeyType: 'RANGE' },
+        { AttributeName: 'id', KeyType: 'RANGE' },
       ],
       ProvisionedThroughput: {
         ReadCapacityUnits: 1,

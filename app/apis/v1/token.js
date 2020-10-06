@@ -36,9 +36,8 @@ exports.refresh = async (req, res) => {
   if (!accessToken) {
     const { name } = UserService.getInfo(owner);
 
-    const employeeList = await EmployeeService.getAllObjectsByOwner(owner);
-    const companyList = await CompanyService.getObjectList(employeeList.map(e => e.companyId));
-    const companies = companyList.map(c => ({ id: c.id, name: c.name }));
+    const employeeList = await EmployeeService.getAllObjectListByOwner(owner);
+    const companies = await CompanyService.getInfoForToken(employeeList);
 
     accessToken = await TokenService.createAccessToken({
       owner, name, companies, type, id,

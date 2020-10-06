@@ -66,7 +66,7 @@ const CompanyRoleType = Object.freeze({
   SETTING_READ_WRITE: 'settingReadWrite', // 설정(읽기, 쓰기)
 });
 exports.CompanyRoleType = CompanyRoleType;
-exports.CompanyAdminRoles = [
+exports.CompanyChiefAdminRoles = [
   CompanyRoleType.EMPLOYEE_READ_WRITE_DELETE,
   CompanyRoleType.EMPLOYMENT_CONTRACT_READ_WRITE,
   CompanyRoleType.FREELANCER_READ_WRITE_DELETE,
@@ -89,8 +89,8 @@ exports.DDBTableName = Object.freeze({
 
 const TextType = Object.freeze({
   USER_NAME_FOR_COMPANY_CREATION: 'userNameForCompanyCreation',
-  COMPANY_ROLES_ADMIN_TITLE: 'companyRolesAdminTitle',
-  COMPANY_ROLES_ADMIN_DESC: 'companyRolesAdminDesc',
+  COMPANY_ROLES_CHIEF_ADMIN_TITLE: 'companyRolesAdminTitle',
+  COMPANY_ROLES_CHIEF_ADMIN_DESC: 'companyRolesAdminDesc',
   COMPANY_ROLES_EMPLOYEE_TITLE: 'companyRolesEmployeeTitle',
   COMPANY_ROLES_EMPLOYEE_DESC: 'compnayRolesEmployeeDesc',
 });
@@ -98,8 +98,8 @@ exports.TextType = TextType;
 
 const LanguagePack = Object.freeze({ // TODO: Excel로부터 읽어와서 구성할 수 있도록 수정해야함.
   [TextType.USER_NAME_FOR_COMPANY_CREATION]: { kor: '최고관리자', eng: 'Administrator' },
-  [TextType.COMPANY_ROLES_ADMIN_TITLE]: { kor: '최고관리자', eng: 'Administrator' },
-  [TextType.COMPANY_ROLES_ADMIN_DESC]: { kor: '관리자는 모든 권한을 갖습니다.', eng: 'All roles' },
+  [TextType.COMPANY_ROLES_CHIEF_ADMIN_TITLE]: { kor: '최고관리자', eng: 'Administrator' },
+  [TextType.COMPANY_ROLES_CHIEF_ADMIN_DESC]: { kor: '관리자는 모든 권한을 갖습니다.', eng: 'All roles' },
   [TextType.COMPANY_ROLES_EMPLOYEE_TITLE]: { kor: '직원', eng: 'Employee' },
   [TextType.COMPANY_ROLES_EMPLOYEE_DESC]: { kor: '직원은 제한된 권한을 갖습니다. 권한 및 알림 설정을 수정할 수 있습니다.', eng: 'Limited roles' },
 });

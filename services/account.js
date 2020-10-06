@@ -106,7 +106,7 @@ exports.getObject = async (type, id, checkAuth = true) => {
   return item;
 };
 
-exports.getAllObjectsByOwner = async (owner) => {
+exports.getAllObjectListByOwner = async (owner) => {
   const itemList = await AccountSDB.query({ owner });
 
   return itemList;

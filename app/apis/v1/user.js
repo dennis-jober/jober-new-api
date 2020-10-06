@@ -25,7 +25,7 @@ exports.change = async (req, res) => {
   await UserService.getObject(owner);
 
   if (password) {
-    let accountList = await AccountService.getAllObjectsByOwner(owner);
+    let accountList = await AccountService.getAllObjectListByOwner(owner);
     accountList = accountList
       .filter(a => a.type === AccountType.USERNAME || a.type === AccountType.EMAIL);
 
