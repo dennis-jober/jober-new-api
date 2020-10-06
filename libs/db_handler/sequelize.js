@@ -76,19 +76,19 @@ async function updateFunc(model, where, value, params) {
 }
 
 module.exports = model => ({
-  get: async (where, params) => {
+  async get(where, params) {
     params = { ...(params || {}), limit: 1 };
 
     return queryFunc(model, where, params);
   },
 
-  query: async (where, params = {}) => {
+  async query(where, params = {}) {
     params = { ...(params || {}), array: true };
 
     return queryFunc(model, where, params);
   },
 
-  count: async (where, params = {}) => {
+  async count(where, params = {}) {
     const options = buildReadOptions(where, params);
 
     try {
@@ -99,7 +99,7 @@ module.exports = model => ({
     }
   },
 
-  put: async (transaction, ...item) => {
+  async put(transaction, ...item) {
     const { length } = item;
     if (!length) throw new Error('no item');
 
@@ -129,7 +129,7 @@ module.exports = model => ({
     }
   },
 
-  update: async (where, value, params) => {
+  async update(where, value, params) {
     if (!value || typeof (value) !== 'object' || Array.isArray(value)) {
       throw new Error('invalid parameter');
     }
@@ -139,7 +139,7 @@ module.exports = model => ({
     return updateFunc(model, where, value, params);
   },
 
-  increase: async (where, value, params) => {
+  async increase(where, value, params) {
     if (!value || typeof (value) !== 'object' || Array.isArray(value)) {
       throw new Error('invalid parameter');
     }
@@ -152,7 +152,7 @@ module.exports = model => ({
     return updateFunc(model, where, value, params);
   },
 
-  delete: async (where, params) => {
+  async delete(where, params) {
     const options = buildWriteOptions(where, params);
 
     try {
@@ -163,7 +163,7 @@ module.exports = model => ({
     }
   },
 
-  truncate: async () => {
+  async truncate() {
     try {
       await model.truncate();
     } catch (err) {

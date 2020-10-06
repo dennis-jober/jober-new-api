@@ -4,11 +4,13 @@ const { doc } = require('../aws');
 const errors = require('../errors');
 
 async function batchGet(TableName, Keys) {
-  return doc.batchGet({
+  const data = await doc.batchGet({
     RequestItems: {
       [TableName]: { Keys },
     },
   }).promise();
+
+  return data.Response ? data.Response[TableName] || [] : [];
 }
 
 async function batchWrite(TableName, Items) {
@@ -26,7 +28,7 @@ async function batchWrite(TableName, Items) {
 }
 
 module.exports = TableName => ({
-  get: async (params, ...Key) => {
+  async get(params, ...Key) {
     if (!Key.length) {
       if (!params) throw new Error('no item');
 
@@ -63,12 +65,13 @@ module.exports = TableName => ({
     }
   },
 
-  query: async (
+  async query(
     KeyConditionExpression, ExpressionAttributeNames, ExpressionAttributeValues, params,
-  ) => {
+  ) {
     const newParams = {
       TableName,
       KeyConditionExpression,
+      ExpressionAttributeNames,
       ExpressionAttributeValues,
       ...(params || {}),
     };
@@ -95,9 +98,9 @@ module.exports = TableName => ({
     }
   },
 
-  queryLimit: async (
+  async queryLimit(
     KeyConditionExpression, ExpressionAttributeNames, ExpressionAttributeValues, params, limit,
-  ) => {
+  ) {
     let list = [];
 
     let items = await this.query(
@@ -117,17 +120,19 @@ module.exports = TableName => ({
     return list;
   },
 
-  queryAll: async (
+  async queryAll(
     KeyConditionExpression, ExpressionAttributeNames, ExpressionAttributeValues, params,
-  ) => this.queryLimit(
-    KeyConditionExpression, ExpressionAttributeNames, ExpressionAttributeValues, params, 0,
-  ),
+  ) {
+    return this.queryLimit(
+      KeyConditionExpression, ExpressionAttributeNames, ExpressionAttributeValues, params, 0,
+    );
+  },
 
-  count: () => {
+  async count() {
     throw new Error('unsupported');
   },
 
-  put: async (...Item) => {
+  async put(...Item) {
     const { length } = Item;
     if (!length) throw new Error('no item');
 
@@ -151,7 +156,7 @@ module.exports = TableName => ({
     }
   },
 
-  set: async (Key, value, increasingFields) => {
+  async set(Key, value, increasingFields) {
     if (!value || typeof (value) !== 'object' || Array.isArray(value)) {
       throw new Error('invalid parameter');
     }
@@ -186,7 +191,7 @@ module.exports = TableName => ({
     }
   },
 
-  increase: async (Key, value) => {
+  async increase(Key, value) {
     if (!value || typeof (value) !== 'object' || Array.isArray(value)) {
       throw new Error('invalid parameter');
     }
@@ -194,7 +199,7 @@ module.exports = TableName => ({
     return this.update(Key, value, Object.keys(value));
   },
 
-  delete: async (Key) => {
+  async delete(Key) {
     try {
       await doc.delete({
         TableName,

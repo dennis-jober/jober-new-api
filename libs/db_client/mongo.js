@@ -17,7 +17,7 @@ module.exports = (endPoint, database) => {
   const db = client.db(database);
 
   return ({
-    get: async (collection, query, projection) => {
+    async get(collection, query, projection) {
       try {
         return db.collection(collection).findOne(query, projection);
       } catch (err) {
@@ -26,7 +26,7 @@ module.exports = (endPoint, database) => {
       }
     },
 
-    query: async (collection, query, projection) => {
+    async query(collection, query, projection) {
       try {
         return db.collection(collection).find(query, projection);
       } catch (err) {
@@ -35,7 +35,7 @@ module.exports = (endPoint, database) => {
       }
     },
 
-    put: async (collection, ...item) => {
+    async put(collection, ...item) {
       const { length } = item;
       if (!length) throw new Error('no item');
 
@@ -62,7 +62,7 @@ module.exports = (endPoint, database) => {
       }
     },
 
-    updateOne: async (collection, query, value, upsert = false) => {
+    async updateOne(collection, query, value, upsert = false) {
       try {
         await db.collection(collection).updateOne(query, value, { upsert });
       } catch (err) {
@@ -71,7 +71,7 @@ module.exports = (endPoint, database) => {
       }
     },
 
-    update: async (collection, query, value, upsert = false) => {
+    async update(collection, query, value, upsert = false) {
       try {
         await db.collection(collection).updateMany(query, value, { upsert });
       } catch (err) {
@@ -80,7 +80,7 @@ module.exports = (endPoint, database) => {
       }
     },
 
-    deleteOne: async (collection, query) => {
+    async deleteOne(collection, query) {
       try {
         await db.collection(collection).deleteOne(query);
       } catch (err) {
@@ -89,7 +89,7 @@ module.exports = (endPoint, database) => {
       }
     },
 
-    delete: async (collection, query) => {
+    async delete(collection, query) {
       try {
         await db.collection(collection).deleteMany(query);
       } catch (err) {
@@ -98,7 +98,7 @@ module.exports = (endPoint, database) => {
       }
     },
 
-    truncate: async (collection) => {
+    async truncate(collection) {
       try {
         await db.collection(collection).drop();
       } catch (err) {

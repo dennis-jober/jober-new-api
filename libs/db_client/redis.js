@@ -63,7 +63,7 @@ module.exports = (endPoint) => {
   const hdelAsync = promisify(client.hdel).bind(client);
 
   return ({
-    get: async (...key) => {
+    async get(...key) {
       const { length } = key;
       let value;
 
@@ -90,7 +90,7 @@ module.exports = (endPoint) => {
       return convertToObject(value);
     },
 
-    set: async (...item) => {
+    async set(...item) {
       const { length } = item;
       let result;
 
@@ -125,7 +125,7 @@ module.exports = (endPoint) => {
       return result;
     },
 
-    setAndExpire: async (key, value, expiry) => {
+    async setAndExpire(key, value, expiry) {
       if (!value) throw new Error('no value');
 
       if (!expiry) expiry = 600;
@@ -138,7 +138,7 @@ module.exports = (endPoint) => {
       }
     },
 
-    incrby: async (key, value) => {
+    async incrby(key, value) {
       if (!value || isNaN(value)) throw new Error('invalid parameter');
 
       try {
@@ -148,7 +148,7 @@ module.exports = (endPoint) => {
       }
     },
 
-    expire: async (key, expiry) => {
+    async expire(key, expiry) {
       if (!expiry && !(expiry === 0)) expiry = 600;
 
       try {
@@ -158,7 +158,7 @@ module.exports = (endPoint) => {
       }
     },
 
-    hget: async (key, ...hashKey) => {
+    async hget(key, ...hashKey) {
       const { length } = hashKey;
       let value;
 
@@ -185,7 +185,7 @@ module.exports = (endPoint) => {
       return convertToObject(value);
     },
 
-    hgetall: async (key) => {
+    async hgetall(key) {
       try {
         return convertToObject(await hgetallAsync(key));
       } catch (err) {
@@ -193,7 +193,7 @@ module.exports = (endPoint) => {
       }
     },
 
-    hset: async (key, ...item) => {
+    async hset(key, ...item) {
       const { length } = item;
       let result;
 
@@ -229,7 +229,7 @@ module.exports = (endPoint) => {
       return result;
     },
 
-    hincrby: async (key, hashKey, value) => {
+    async hincrby(key, hashKey, value) {
       if (!value || isNaN(value)) throw new Error('invalid parameter');
 
       try {
@@ -239,7 +239,7 @@ module.exports = (endPoint) => {
       }
     },
 
-    hdel: async (key, hashKey) => {
+    async hdel(key, hashKey) {
       try {
         return await hdelAsync(key, hashKey);
       } catch (err) {
@@ -247,7 +247,7 @@ module.exports = (endPoint) => {
       }
     },
 
-    sadd: async (key, value) => {
+    async sadd(key, value) {
       if (!value) throw new Error('invalid parameter');
 
       try {
@@ -257,7 +257,7 @@ module.exports = (endPoint) => {
       }
     },
 
-    sismember: async (key, value) => {
+    async sismember(key, value) {
       if (!value) throw new Error('invalid parameter');
 
       try {

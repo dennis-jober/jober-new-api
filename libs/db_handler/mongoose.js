@@ -3,7 +3,7 @@
 const errors = require('../errors');
 
 module.exports = Model => ({
-  get: async (query, projection) => {
+  async get(query, projection) {
     try {
       return await Model.findOne(query, projection);
     } catch (err) {
@@ -12,7 +12,7 @@ module.exports = Model => ({
     }
   },
 
-  query: async (query, projection) => {
+  async query(query, projection) {
     try {
       return await Model.find(query, projection);
     } catch (err) {
@@ -21,7 +21,7 @@ module.exports = Model => ({
     }
   },
 
-  count: async (query) => {
+  async count(query) {
     try {
       return await Model.count(query);
     } catch (err) {
@@ -30,7 +30,7 @@ module.exports = Model => ({
     }
   },
 
-  put: async (...item) => {
+  async put(...item) {
     const { length } = item;
     if (!length) throw new Error('no item');
 
@@ -63,7 +63,7 @@ module.exports = Model => ({
     }
   },
 
-  updateOne: async (query, value, upsert = false) => {
+  async updateOne(query, value, upsert = false) {
     if (!value || typeof (value) !== 'object' || Array.isArray(value)) {
       throw new Error('invalid parameter');
     }
@@ -76,7 +76,7 @@ module.exports = Model => ({
     }
   },
 
-  update: async (query, value, upsert = false) => {
+  async update(query, value, upsert = false) {
     if (!value || typeof (value) !== 'object' || Array.isArray(value)) {
       throw new Error('invalid parameter');
     }
@@ -89,7 +89,7 @@ module.exports = Model => ({
     }
   },
 
-  deleteOne: async (query) => {
+  async deleteOne(query) {
     try {
       await Model.deleteOne(query);
     } catch (err) {
@@ -98,7 +98,7 @@ module.exports = Model => ({
     }
   },
 
-  delete: async (query) => {
+  async delete(query) {
     try {
       await Model.deleteMany(query);
     } catch (err) {
@@ -107,7 +107,7 @@ module.exports = Model => ({
     }
   },
 
-  truncate: async () => {
+  async truncate() {
     try {
       await Model.collection.drop();
     } catch (err) {
