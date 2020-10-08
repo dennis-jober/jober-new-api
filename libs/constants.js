@@ -64,9 +64,13 @@ const CompanyRoleType = Object.freeze({
 
   SETTING_READ: 'settingRead', // 설정(읽기)
   SETTING_READ_WRITE: 'settingReadWrite', // 설정(읽기, 쓰기)
+
+  COMPANY_DETAIL_READ: 'companyDetailRead', // 기업정보(읽기)
+  COMPANY_DETAIL_READ_WRITE: 'companyDetailReadWrite', // 기업정보(읽기, 쓰기)
 });
 exports.CompanyRoleType = CompanyRoleType;
-exports.CompanyChiefAdminRoles = [
+
+exports.CompanyChiefAdminRoles = Object.freeze([
   CompanyRoleType.EMPLOYEE_READ_WRITE_DELETE,
   CompanyRoleType.EMPLOYMENT_CONTRACT_READ_WRITE,
   CompanyRoleType.FREELANCER_READ_WRITE_DELETE,
@@ -78,12 +82,15 @@ exports.CompanyChiefAdminRoles = [
   CompanyRoleType.RECRUITMENT_READ_WRITE_DELETE,
   CompanyRoleType.BOARD_READ_WRITE_DELETE,
   CompanyRoleType.SETTING_READ_WRITE,
-];
+  CompanyRoleType.COMPANY_DETAIL_READ_WRITE,
+]);
 
 exports.DDBTableName = Object.freeze({
   USER: addPrefix('user'),
   COMPANY: addPrefix('company'),
   COMPANY_ROLE: addPrefix('company.role'),
+  COMPANY_DOCUMENT: addPrefix('company.document'),
+  COMPANY_CERTIFICATION: addPrefix('company.certification'),
   EMPLOYEE: addPrefix('employee'),
 });
 

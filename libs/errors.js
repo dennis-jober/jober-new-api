@@ -48,6 +48,7 @@ const table = {
   // Status & Banned for V1(103XX)
   BannedUserError: 10301, // 어뷰저로 등록된 유저
   SuspendedUserError: 10302, // 정지된 유저
+  InvalidRoleError: 10303, // 권한 없음
 
   // Retry
   RetryError: 99999, // 자동 재시도 필요함

@@ -14,7 +14,6 @@ exports.createObject = async (params) => {
     owner,
     employeeType,
     rolesId,
-    deletedAt: ' ',
   };
 
   await EmployeeDDB.put(employee);
