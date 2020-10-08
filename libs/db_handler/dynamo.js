@@ -156,7 +156,7 @@ module.exports = TableName => ({
     }
   },
 
-  async set(Key, value, increasingFields) {
+  async set(Key, value, increasingFields = []) {
     if (!value || typeof (value) !== 'object' || Array.isArray(value)) {
       throw new Error('invalid parameter');
     }
