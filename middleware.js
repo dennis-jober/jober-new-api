@@ -15,9 +15,12 @@ exports.auth = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, result) => {
     if (!result) return next(new errors.InvalidAccessTokenError());
 
-    const { owner, type, id } = result;
+    const {
+      owner, name, account,
+    } = result;
     req.owner = owner;
-    req.account = { type, id };
+    req.name = name;
+    req.account = account;
     next();
   })(req, res, next);
 };

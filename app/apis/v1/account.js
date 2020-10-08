@@ -3,6 +3,7 @@
 const errors = require('../../../libs/errors');
 const { transaction } = require('../../../db/sequelize');
 
+const Common = require('./index');
 const TokenService = require('../../../services/token');
 const AccountService = require('../../../services/account');
 const UserService = require('../../../services/user');
@@ -132,14 +133,8 @@ exports.login = async (req, res) => {
 
   let accessToken = await TokenService.createAccessTokenFromRedis(owner, { id, type });
   if (!accessToken) {
-    const { name } = UserService.getInfo(owner);
-
-    const employeeList = await EmployeeService.getAllObjectListByOwner(owner);
-    const companies = await CompanyService.getInfoForToken(employeeList);
-
-    accessToken = await TokenService.createAccessToken({
-      type, id, owner, name, companies,
-    });
+    const { name } = await UserService.getInfo(owner);
+    accessToken = await Common.createToken(owner, name, { type, id });
   }
   const refreshToken = await TokenService.createRefreshToken(owner);
 

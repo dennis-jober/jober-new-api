@@ -26,12 +26,12 @@ const createAccessToken = async (params) => {
 };
 exports.createAccessToken = createAccessToken;
 
-exports.createAccessTokenFromRedis = async (owner, type, id) => {
+exports.createAccessTokenFromRedis = async (owner, account) => {
   let params = await TokenRedis.getTokenInfo(owner);
   if (!params) return;
 
-  if (type && id) {
-    params = Object.assign(params, { type, id });
+  if (account) {
+    params = Object.assign(params, account);
   }
 
   return createAccessToken(params);
