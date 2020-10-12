@@ -10,6 +10,8 @@ const table = {
   InvalidInputError: 101, // 클라이언트로부터 전송받은 parameter 오류
   // InvalidAccessTokenError: 102, // Access 토큰 인증 오류(만료 포함)
   // InvalidRefreshTokenError: 103, // Refresh 토큰 인증 오류(만료 포함)
+  DuplicatedDataError: 104, // 중복된 데이터 오류
+  ParsingError: 105, // JSON parsing 오류
 
   // Cannot find data errors(2XX)
   NoUserError: 201, // 사용자 없음

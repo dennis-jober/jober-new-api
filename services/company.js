@@ -8,7 +8,9 @@ const CompanyDocumentDDB = require('../db/dynamodb/company.document');
 const CompanyCertificationDDB = require('../db/dynamodb/company.certification');
 
 const { UniqueId } = require('../libs/util');
-const { CompanyChiefAdminRoles, TextType, Text } = require('../libs/constants');
+const {
+  CompanyChiefAdminRoles, CompanyDocumentType, CompanyCertificationType, TextType, Text,
+} = require('../libs/constants');
 
 exports.getObject = async (id) => {
   const item = await CompanyDDB.get({ id });
@@ -126,4 +128,126 @@ exports.changeObject = async (id, params) => {
   if (email) value.email = email;
 
   await CompanyDDB.set({ id }, value);
+};
+
+exports.changeDocumentObject = async (id, type, params) => {
+  const { id: objId } = params;
+  const item = { type };
+
+  switch (type) {
+    case CompanyDocumentType.BUSINESS_LICENCE: // Type에 Unique한 item
+      {
+        if (!objId) {
+          const check = await CompanyDocumentDDB.query(
+            '#cid = :cid and #type = :type',
+            { '#cid': 'companyId', '#type': 'type' },
+            { ':cid': id, ':type': type },
+            { IndexName: 'companyId-type-index' },
+          );
+          if (check.length) throw new errors.DuplicatedDataError('already exist for put');
+        }
+
+        const {
+          licenceType, licenceNumber, openDate, registerNumber, condition, kind, email, licenceUrl,
+        } = params;
+
+        if (licenceType) item.licenceType = licenceType;
+        if (licenceNumber) item.licenceNumber = licenceNumber;
+        if (openDate) item.openDate = openDate;
+        if (registerNumber) item.registerNumber = registerNumber;
+        if (condition) item.condition = condition;
+        if (kind) item.kind = kind;
+        if (email) item.email = email;
+        if (licenceUrl) item.licenceUrl = licenceUrl;
+      }
+      break;
+    case CompanyDocumentType.BANK_ACCOUNT:
+      {
+        const {
+          name, bank, account, bankbookUrl,
+        } = params;
+
+        if (name) item.name = name;
+        if (bank) item.bank = bank;
+        if (account) item.account = account;
+        if (bankbookUrl) item.bankbookUrl = bankbookUrl;
+      }
+      break;
+    default:
+      throw new errors.InvalidInputError();
+  }
+
+  if (objId) {
+    await CompanyDocumentDDB.set({ companyId: id, id: objId }, item);
+  } else {
+    item.companyId = id;
+    item.id = UniqueId();
+    await CompanyDocumentDDB.put(item);
+  }
+};
+
+exports.changeCertificationObject = async (id, type, params) => {
+  const { id: objId } = params;
+  const item = { type };
+
+  if (!objId) {
+    const check = await CompanyDocumentDDB.query(
+      '#cid = :cid and #type = :type',
+      { '#cid': 'companyId', '#type': 'type' },
+      { ':cid': id, ':type': type },
+      { IndexName: 'companyId-type-index' },
+    );
+    if (check.length) throw new errors.DuplicatedDataError('already exist for put');
+  }
+
+  switch (type) {
+    case CompanyCertificationType.VENTURE:
+      {
+        const {
+          ventureType, institute, beginDate, endDate, certificateUrl,
+        } = params;
+
+        if (ventureType) item.ventureType = ventureType;
+        if (institute) item.institute = institute;
+        if (beginDate) item.beginDate = beginDate;
+        if (endDate) item.endDate = endDate;
+        if (certificateUrl) item.certificateUrl = certificateUrl;
+      }
+      break;
+    case CompanyCertificationType.RESEARCH_INSTITUTE:
+      {
+        const {
+          address, registerDate, beginDate, endDate, certificateUrl,
+        } = params;
+
+        if (address) item.address = address;
+        if (registerDate) item.registerDate = registerDate;
+        if (beginDate) item.beginDate = beginDate;
+        if (endDate) item.endDate = endDate;
+        if (certificateUrl) item.certificateUrl = certificateUrl;
+      }
+      break;
+    case CompanyCertificationType.GUARANTEE_FUND:
+      {
+        const {
+          institute, registerNumber, registerDate, certificateUrl,
+        } = params;
+
+        if (institute) item.institute = institute;
+        if (registerNumber) item.registerNumber = registerNumber;
+        if (registerDate) item.registerDate = registerDate;
+        if (certificateUrl) item.certificateUrl = certificateUrl;
+      }
+      break;
+    default:
+      throw new errors.InvalidInputError();
+  }
+
+  if (objId) {
+    await CompanyCertificationDDB.set({ companyId: id, id: objId }, item);
+  } else {
+    item.companyId = id;
+    item.id = UniqueId();
+    await CompanyCertificationDDB.put(item);
+  }
 };

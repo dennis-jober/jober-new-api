@@ -6,15 +6,30 @@ const { COMPANY_CERTIFICATION } = require('../../libs/constants').DDBTableName;
 const params = {
   TableName: COMPANY_CERTIFICATION,
   KeySchema: [
-    { AttributeName: 'id', KeyType: 'HASH' },
+    { AttributeName: 'companyId', KeyType: 'HASH' },
+    { AttributeName: 'id', KeyType: 'RANGE' },
   ],
   AttributeDefinitions: [
+    { AttributeName: 'companyId', AttributeType: 'S' },
     { AttributeName: 'id', AttributeType: 'S' },
+    { AttributeName: 'type', AttributeType: 'S' },
   ],
   ProvisionedThroughput: {
     ReadCapacityUnits: 1,
     WriteCapacityUnits: 1,
   },
+  LocalSecondaryIndexes: [
+    {
+      IndexName: 'companyId-type-index',
+      KeySchema: [
+        { AttributeName: 'companyId', KeyType: 'HASH' },
+        { AttributeName: 'type', KeyType: 'RANGE' },
+      ],
+      Projection: {
+        ProjectionType: 'ALL',
+      },
+    },
+  ],
 };
 
 ddb.createTable(params, (err, data) => {

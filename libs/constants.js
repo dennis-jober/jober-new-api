@@ -85,6 +85,17 @@ exports.CompanyChiefAdminRoles = Object.freeze([
   CompanyRoleType.COMPANY_DETAIL_READ_WRITE,
 ]);
 
+exports.CompanyDocumentType = Object.freeze({
+  BUSINESS_LICENCE: 'businessLicence',
+  BANK_ACCOUNT: 'bankAccount',
+});
+
+exports.CompanyCertificationType = Object.freeze({
+  VENTURE: 'venture',
+  RESEARCH_INSTITUTE: 'researchInstitute',
+  GUARANTEE_FUND: 'guaranteeFund',
+});
+
 exports.DDBTableName = Object.freeze({
   USER: addPrefix('user'),
   COMPANY: addPrefix('company'),

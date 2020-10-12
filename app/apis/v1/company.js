@@ -1,5 +1,7 @@
 'use strict';
 
+const errors = require('../../../libs/errors');
+
 const Common = require('./index');
 const TokenService = require('../../../services/token');
 const EmployeeService = require('../../../services/employee');
@@ -65,7 +67,7 @@ exports.change = async (req, res) => {
   const { id } = params;
 
   const employee = await EmployeeService.getObjectByOwner(id, owner);
-  await CompanyService.checkRoles(id, employee.rolesId, CompanyRoleType.COMPANY_DETAIL_READ);
+  await CompanyService.checkRoles(id, employee.rolesId, CompanyRoleType.COMPANY_DETAIL_READ_WRITE);
 
   await CompanyService.changeObject(id, {
     name, president, addressBase, addressExt, phone, fax, email,
@@ -78,6 +80,15 @@ exports.change = async (req, res) => {
 };
 
 exports.changeDocument = async (req, res) => {
+  const { owner, body, params } = req;
+  const { type } = body;
+  const { id } = params;
+
+  const employee = await EmployeeService.getObjectByOwner(id, owner);
+  await CompanyService.checkRoles(id, employee.rolesId, CompanyRoleType.COMPANY_DETAIL_READ_WRITE);
+
+  await CompanyService.changeDocumentObject(id, type, body);
+
   res.send({
     code: 0,
     result: {},
@@ -85,6 +96,15 @@ exports.changeDocument = async (req, res) => {
 };
 
 exports.changeCertification = async (req, res) => {
+  const { owner, body, params } = req;
+  const { type } = body;
+  const { id } = params;
+
+  const employee = await EmployeeService.getObjectByOwner(id, owner);
+  await CompanyService.checkRoles(id, employee.rolesId, CompanyRoleType.COMPANY_DETAIL_READ_WRITE);
+
+  await CompanyService.changeCertificationObject(id, type, body);
+
   res.send({
     code: 0,
     result: {},
